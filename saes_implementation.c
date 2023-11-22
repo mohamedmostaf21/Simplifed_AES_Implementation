@@ -1,6 +1,6 @@
 //Mohamed Mostafa Shaban Mohamed
 //1901650
-/***************************      Simplified AES implementation in pure C programming         ******************************/ 
+/***************************      Simplified AES implementation in pure C programming         ******************************/
 
 // Simplified_AES.c: This file contains the 'main' function. Program execution begins and ends there.
 //
@@ -34,11 +34,11 @@ static inline uint8_t _sub(uint8_t nibble, uint8_t _tab[4][4]) {
 void sub_nibbles(uint8_t block[4]) {
 
     static uint8_t _tab[4][4] = {
-     // 00    01     02     03   
-       0x9,  0x4,   0xA,   0xB ,     // 00
-       0xD,  0x1,   0x8,   0x5,      // 01
-       0x6,  0x2,   0x0,   0x3,      // 02
-       0xC,  0xE,   0xF,   0x7       // 03
+        // 00    01     02     03   
+          0x9,  0x4,   0xA,   0xB ,     // 00
+          0xD,  0x1,   0x8,   0x5,      // 01
+          0x6,  0x2,   0x0,   0x3,      // 02
+          0xC,  0xE,   0xF,   0x7       // 03
     };
 
     for (int i = 0; i < 4; i++) {
@@ -55,11 +55,11 @@ void sub_nibbles(uint8_t block[4]) {
 void inv_sub_nibbles(uint8_t block[4]) {
 
     static uint8_t _tab[4][4] = {
-      // 00    01     02     03   
-        0xa,  0x5,   0x9,   0xb ,     // 00
-        0x1,  0x7,   0xb,   0xf,      // 01
-        0x6,  0x0,   0x2,   0x3,      // 02
-        0xc,  0x4,   0xd,   0xe       // 03
+        // 00    01     02     03   
+          0xA,  0x5,   0x9,   0xB ,     // 00
+          0x1,  0x7,   0x8,   0xF,      // 01
+          0x6,  0x0,   0x2,   0x3,      // 02
+          0xC,  0x4,   0xD,   0xE       // 03
     };
 
     for (int i = 0; i < 4; i++) {
@@ -88,11 +88,11 @@ static uint8_t _find_tmp_word(uint8_t w, uint8_t r_con) {
 
     /* Substitution box table */
     static uint8_t _tab[4][4] = {
-    // 00    01     02     03   
-      0x9,  0x4,   0xA,   0xB ,     // 00
-      0xD,  0x1,   0x8,   0x5,      // 01
-      0x6,  0x2,   0x0,   0x3,      // 02
-      0xC,  0xE,   0xF,   0x7       // 03
+        // 00    01     02     03   
+          0x9,  0x4,   0xA,   0xB ,     // 00
+          0xD,  0x1,   0x8,   0x5,      // 01
+          0x6,  0x2,   0x0,   0x3,      // 02
+          0xC,  0xE,   0xF,   0x7       // 03
     };
 
     /* Rotate the nibbles of the given word */
@@ -105,7 +105,7 @@ static uint8_t _find_tmp_word(uint8_t w, uint8_t r_con) {
     tmp = (tmp | _tab[row][col]);
 
     /* Substitute the second nibble */
-    row = (tmp & 0xC0) >> 6; 
+    row = (tmp & 0xC0) >> 6;
     col = (tmp & 0x30) >> 4;
     tmp = (tmp & 0x0F);
     tmp = (tmp | _tab[row][col] << 4);
@@ -346,12 +346,15 @@ uint16_t _saes_enc_block(uint16_t plainblock, uint8_t subkey[3][4]) {
     shft_rows(block);
     /* Add round key */
     add_rnd_key(block, subkey[2]);
+    /* Check if the most significant bit is 0 and return 0 with remaining bits set to 0 */
+
+
     printf("Encryption Worked!\n");
     /* Combine the 4 nibbles and return the 16 bits */
     return (((uint16_t)block[3] << 12) |
-            ((uint16_t)block[2] << 8) |
-            ((uint16_t)block[1] << 4) |
-            ((uint16_t)block[0]));
+        ((uint16_t)block[2] << 8) |
+        ((uint16_t)block[1] << 4) |
+        ((uint16_t)block[0]));
 }
 
 
@@ -390,16 +393,18 @@ uint16_t _saes_dec_block(uint16_t cipherblock, uint8_t subkey[3][4]) {
     inv_sub_nibbles(block);
     /* Add round key */
     add_rnd_key(block, subkey[0]);
+
     printf("Decryption Worked!\n");
     /* Combine the 4 nibbles and return the 16 bits */
     return (((uint16_t)block[3] << 12) |
-            ((uint16_t)block[2] << 8) |
-            ((uint16_t)block[1] << 4) |
-            ((uint16_t)block[0]));
+        ((uint16_t)block[2] << 8) |
+        ((uint16_t)block[1] << 4) |
+        ((uint16_t)block[0]));
 }
 
+
 /******************************* test Encryption & Decryption *****************************/
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     if (argc != 4) {
         printf("Usage: %s <ENC/DEC> <key> <plaintext>\n", argv[0]);
         return 1;
@@ -416,11 +421,13 @@ int main(int argc, char *argv[]) {
     uint16_t output;
     if (strcmp(mode, "ENC") == 0) {
         output = _saes_enc_block(input, subkey);
-        printf("The Encryption Output: \nPlaintext = 0x%X\nCiphertext = 0x%X\n", input, output);
-    } else if (strcmp(mode, "DEC") == 0) {
+        printf("The Encryption Output: \nPlaintext = 0x%04hhX\nCiphertext = 0x%04hhX\n", input, output);
+    }
+    else if (strcmp(mode, "DEC") == 0) {
         output = _saes_dec_block(input, subkey);
-        printf("The Decryption Output: \nCiphertext = 0x%X\nPlaintext = 0x%X\n", input, output);
-    } else {
+        printf("The Decryption Output: \nCiphertext = 0x%04hhX\nPlaintext = 0x%04hhX\n", input, output);
+    }
+    else {
         printf("Invalid mode. Use ENC for encryption or DEC for decryption.\n");
         return 1;
     }
