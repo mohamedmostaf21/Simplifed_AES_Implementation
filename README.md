@@ -22,10 +22,10 @@ gcc saes_implementation.c main
 ```
 # Example1 Encryption
 ```bash
-./main <span style="color:blue">ENC 4AF5 D728</span>
+./main `ENC 4AF5 D728`
 ```
 # Example2 Decryption
 ```bash
-./main <span style="color:blue">DEC 4AF5 24EC</span>
+./main `DEC 4AF5 24EC`
 ```
 
