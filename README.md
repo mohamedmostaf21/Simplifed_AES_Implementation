@@ -12,7 +12,7 @@ The aim of this project is to implement a simplified AES algorithm.
 
 # Requirements
 - **Language:** Pure C
-- **File Name:** `saes_{student_code}.c`
+- **File Name:** `saes_implementation.c`
 - **External Libraries:** Do not use any external libraries.
 
 # Compilation
