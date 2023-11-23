@@ -11,15 +11,12 @@ This project is for the Computer and Network Security Course.
 The aim of this project is to implement a simplified AES algorithm.
 
 # Requirements
-
 - **Language:** Pure C
 - **File Name:** `saes_{student_code}.c`
 - **External Libraries:** Do not use any external libraries.
 
 # Compilation
-
 Compile using `gcc`:
-
 ```bash
 gcc saes_implementation.c main
 ```
