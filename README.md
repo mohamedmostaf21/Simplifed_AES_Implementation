@@ -1,18 +1,31 @@
-# Simplifed_AES_Implementation using pure C programming
+# Simplified_AES_Implementation using pure C programming
 
-This project is for Computer and Network Security Course.
-Language: C
-Development environment: Visual Studio Code
-Project type: Console Application
-Aim
-implement a simplified AES algorithm
-Requirement
-Pure C
-Single file with name saes_{studnet code}.c
-Do not use any external library.
-compile
+This project is for the Computer and Network Security Course.
+
+- **Language:** C
+- **Development Environment:** Visual Studio Code
+- **Project Type:** Console Application
+
+# Aim
+
+The aim of this project is to implement a simplified AES algorithm.
+
+# Requirements
+- **Language:** Pure C
+- **File Name:** `saes_implementation.c`
+- **External Libraries:** Do not use any external libraries.
+
+# Compilation
+Compile using `gcc`:
+```bash
 gcc saes_implementation.c main
-example1 for encryption
-./main ENC 4AF5 D728 
-example2 to for decryption
-./main DEC 4AF5 24EC 
+```
+# Example1 Encryption
+```bash
+./main ENC 4AF5 D728
+```
+# Example2 Decryption
+```bash
+./main DEC 4AF5 24EC
+```
+
