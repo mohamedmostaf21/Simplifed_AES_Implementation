@@ -18,7 +18,7 @@ The aim of this project is to implement a simplified AES algorithm.
 # Compilation
 Compile using `gcc`:
 ```bash
-gcc saes_implementation.c main
+gcc saes_implementation.c -o main
 ```
 # Example1 Encryption
 ```bash
