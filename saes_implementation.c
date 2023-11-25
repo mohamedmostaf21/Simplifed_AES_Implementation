@@ -401,12 +401,23 @@ uint16_t _saes_dec_block(uint16_t cipherblock, uint8_t subkey[3][4]) {
         ((uint16_t)block[1] << 4) |
         ((uint16_t)block[0]));
 }
-
+/******************* check hex. number or not **************************/
+int isHex(uint16_t number) {
+    // Check if the number contains any characters other than hexadecimal digits (0-9, A-F)
+    while (number != 0) {
+        int digit = number % 16;
+        if (digit >= 10 && digit <= 15) {
+            return 0;
+        }
+        number /= 16;
+    }
+    return 1;
+}
 
 /******************************* test Encryption & Decryption *****************************/
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
     if (argc != 4) {
-        printf("Usage: %s <ENC/DEC> <key> <plaintext>\n", argv[0]);
+        printf("Error Follow this Usage: %s <ENC/DEC> <key> <plaintext/ciphertext>\n", argv[0]);
         return 1;
     }
 
@@ -414,20 +425,27 @@ int main(int argc, char* argv[]) {
 
     uint8_t subkey[3][4];
     uint16_t key = strtol(argv[2], NULL, 16); // Convert the second argument to a hexadecimal key
+    if(isHex(key)){
+        printf("Error please enter the key in hexadecimal number in 16bits!!");
+        return 1;
+    }
+    
     key_exp(key, subkey);
 
     uint16_t input = strtol(argv[3], NULL, 16); // Convert the third argument to a hexadecimal input
+    if(isHex(input)){
+        printf("Error please enter the plain in hexadecimal number in 16bits!!");
+        return 1;
+    }
 
     uint16_t output;
     if (strcmp(mode, "ENC") == 0) {
         output = _saes_enc_block(input, subkey);
         printf("The Encryption Output: \nPlaintext = 0x%04hhX\nCiphertext = 0x%04hhX\n", input, output);
-    }
-    else if (strcmp(mode, "DEC") == 0) {
+    } else if (strcmp(mode, "DEC") == 0) {
         output = _saes_dec_block(input, subkey);
         printf("The Decryption Output: \nCiphertext = 0x%04hhX\nPlaintext = 0x%04hhX\n", input, output);
-    }
-    else {
+    } else {
         printf("Invalid mode. Use ENC for encryption or DEC for decryption.\n");
         return 1;
     }
