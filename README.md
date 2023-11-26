@@ -21,8 +21,13 @@ Compile using `gcc`:
 .\build.bat
 ```
 # Running the program
-Run using:
+Run testCases without Errors in input:
 ```bash
 .\run_testcases.bat
 ```
+Run testCases with Errors in input:
+```bash
+.\run_ErrorCases.bat
+```
+
 
