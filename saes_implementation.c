@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <ctype.h>
 // Implementation: S-Box
 /**
  * @brief Substitute the given nibble using the given 4x4 S-box table
@@ -401,32 +402,48 @@ uint16_t _saes_dec_block(uint16_t cipherblock, uint8_t subkey[3][4]) {
         ((uint16_t)block[1] << 4) |
         ((uint16_t)block[0]));
 }
-
-
+/******************* check hex. number or not **************
 /******************************* test Encryption & Decryption *****************************/
 int main(int argc, char *argv[]) {
     if (argc != 4) {
         printf("Error Follow this Usage: %s <ENC/DEC> <key> <plaintext/ciphertext>\n", argv[0]);
         return 1;
     }
-
     char* mode = argv[1]; // Get the mode argument
-
     uint8_t subkey[3][4];
     uint16_t key = strtol(argv[2], NULL, 16); // Convert the second argument to a hexadecimal key
-   
-    
     key_exp(key, subkey);
-
+    /******************* check key is hex. number or not *******************/
+    char k[4];
+    k[0] = argv[2][0];
+    k[1] = argv[2][1];
+    k[2] = argv[2][2];
+    k[3] = argv[2][3];
+    if( !(isxdigit(k[0]) && isxdigit(k[1]) && isxdigit(k[2]) && isxdigit(k[3])) ){
+        printf("Error please enter the key in hexadecimal number in 16bits!!");
+        return 1;
+    }
+    
     uint16_t input = strtol(argv[3], NULL, 16); // Convert the third argument to a hexadecimal input
-   
     uint16_t output;
+    /******************* check in is hex. number or not *******************/
+    char in[4];
+    in[0] = argv[3][0];
+    in[1] = argv[3][1];
+    in[2] = argv[3][2];
+    in[3] = argv[3][3];
+
+    if( !(isxdigit(in[0]) && isxdigit(in[1]) && isxdigit(in[2]) && isxdigit(in[3])) ){
+        printf("Error please enter the input in hexadecimal number in 16bits!!");
+        return 1;
+    }
+    /******************* compare argv[1] is ENC or DEC *******************/
     if (strcmp(mode, "ENC") == 0) {
         output = _saes_enc_block(input, subkey);
-        printf("The Encryption Output: \nPlaintext = 0x%04hhX\nCiphertext = 0x%04hhX\n", input, output);
+        printf("0x%04hhX\n", output);
     } else if (strcmp(mode, "DEC") == 0) {
         output = _saes_dec_block(input, subkey);
-        printf("The Decryption Output: \nCiphertext = 0x%04hhX\nPlaintext = 0x%04hhX\n", input, output);
+        printf("0x%04hhX\n", output);
     } else {
         printf("Invalid mode. Use ENC for encryption or DEC for decryption.\n");
         return 1;
