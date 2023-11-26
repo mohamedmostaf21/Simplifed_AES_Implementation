@@ -18,14 +18,11 @@ The aim of this project is to implement a simplified AES algorithm.
 # Compilation
 Compile using `gcc`:
 ```bash
-gcc saes_implementation.c -o main
+.\build.bat
 ```
-# Example1 Encryption
+# Running the program
+Run using:
 ```bash
-./main ENC 4AF5 D728
-```
-# Example2 Decryption
-```bash
-./main DEC 4AF5 24EC
+.\run_testcases.bat
 ```
 
