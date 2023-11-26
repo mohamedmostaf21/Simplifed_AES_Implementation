@@ -20,7 +20,8 @@ Compile using `gcc`:
 ```bash
 .\build.bat
 ```
-# Run using
+# Running the program
+Run using:
 ```bash
 .\run_testcases.bat
 ```
