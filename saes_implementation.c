@@ -401,18 +401,7 @@ uint16_t _saes_dec_block(uint16_t cipherblock, uint8_t subkey[3][4]) {
         ((uint16_t)block[1] << 4) |
         ((uint16_t)block[0]));
 }
-/******************* check hex. number or not **************************/
-int isHex(uint16_t number) {
-    // Check if the number contains any characters other than hexadecimal digits (0-9, A-F)
-    while (number != 0) {
-        int digit = number % 16;
-        if (digit >= 10 && digit <= 15) {
-            return 0;
-        }
-        number /= 16;
-    }
-    return 1;
-}
+
 
 /******************************* test Encryption & Decryption *****************************/
 int main(int argc, char *argv[]) {
@@ -425,19 +414,12 @@ int main(int argc, char *argv[]) {
 
     uint8_t subkey[3][4];
     uint16_t key = strtol(argv[2], NULL, 16); // Convert the second argument to a hexadecimal key
-    if(isHex(key)){
-        printf("Error please enter the key in hexadecimal number in 16bits!!");
-        return 1;
-    }
+   
     
     key_exp(key, subkey);
 
     uint16_t input = strtol(argv[3], NULL, 16); // Convert the third argument to a hexadecimal input
-    if(isHex(input)){
-        printf("Error please enter the plain in hexadecimal number in 16bits!!");
-        return 1;
-    }
-
+   
     uint16_t output;
     if (strcmp(mode, "ENC") == 0) {
         output = _saes_enc_block(input, subkey);
